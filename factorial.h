@@ -10,45 +10,45 @@ const int smallOddFactorial[] = {
     42567525, 638512875, 638512875 };
 
 struct factorials{
-    int oddFact;
-    int sqrOddFact=1;
+    long int oddFact;
+    long int sqrOddFact=1;
 };
 
-int product(int m, int len){
+long int product(long int m, long int len){
     if (len == 1) return m;
     if (len == 2) return m * (m - 2);
-    int hlen = len >> 1;
+    long int hlen = len >> 1;
     return product(m-(hlen*2), len-hlen) * product(m, hlen);
 }
 
-factorials oddFactorial(int n){
+factorials oddFactorial(long int n){
     factorials fact;
 
     if (n < 17){
         fact.oddFact = smallOddFactorial[n];
-        fact.sqrOddFact = smallOddFactorial[int(n/2)];
+        fact.sqrOddFact = smallOddFactorial[(long int) n/2];
     }else{
-        factorials f = oddFactorial(int(n/2));
+        factorials f = oddFactorial((long int) n/2);
         fact.oddFact = f.sqrOddFact;
-        int oddSwing;
+        long int oddSwing;
         if (n < 33) 
             oddSwing = smallOddSwing[n]; 
         else{
-            int len = (n - 1); // 4
+            long int len = (n - 1); // 4
             if ((n % 4) != 2) len += 1;
-            int high = n - ((n + 1) & 1);
+            long int high = n - ((n + 1) & 1);
             oddSwing = product(high, len); // oldOddFact
         }
-        fact.oddFact = int(pow(fact.sqrOddFact,2 )) * oddSwing;
+        fact.oddFact = (long int)(pow(fact.sqrOddFact,2 )) * oddSwing;
     }
     return fact;
 }
 
-int factorial(int n){
+long int factorial(long int n){
     if (n == 0) return 1;
     if (n <  0) return 0;
     
-    int N = n, bits = n;
+    long int N = n, bits = n;
     while (N != 0){
         bits -= (N & 1);
         N >>= 1;
